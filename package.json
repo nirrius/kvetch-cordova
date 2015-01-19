@@ -1,0 +1,22 @@
+{
+  "name": "kvetch-cordova",
+  "version": "0.0.0",
+  "description": "Relational chat.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nirrius/kvetch-cordova.git"
+  },
+  "keywords": [
+    "kvetch",
+    "chat"
+  ],
+  "author": "Nirrius",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nirrius/kvetch-cordova/issues"
+  },
+  "homepage": "https://github.com/nirrius/kvetch-cordova"
+}
