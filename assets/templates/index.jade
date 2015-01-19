@@ -1,0 +1,42 @@
+doctype html
+
+html.no-js(lang="en-US")
+  head
+    title= meta.title
+
+    script.
+      document.documentElement.classList.remove("no-js");
+
+      localStorage["ENVIRONMENT"] = "#{config.ENVIRONMENT}";
+      localStorage["APP_BASE"]    = "#{config.APP_BASE}";
+      localStorage["API_BASE"]    = "#{config.API_BASE}";
+
+    script(src="cordova.js")
+    script(src="#{asset('application.js')}")
+
+    link(rel="stylesheet" type="text/css" href="#{asset('application.css')}")
+    link(rel="shortcut icon" href="#{asset('foundation/glyph-logo-small.png')}")
+    link(rel="canonical" href="https://#{config.APP_BASE}")
+
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+    meta(name="format-detection" content="telephone=no")
+    meta(name="msapplication-tap-highlight" content="no")
+    meta(name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi")
+
+    meta(name="description" content="#{meta.description}")
+    meta(name="keywords" content="#{meta.keywords.join(', ')}")
+
+    meta(name="og:title" content="#{meta.title}")
+    meta(name="og:site_name" content="#{meta.title}")
+    meta(name="og:url" content="https://#{config.APP_BASE}")
+
+  body(spellcheck=true)
+    noscript.no-js-info
+      h1= meta.title
+
+      p This website requires JavaScript to retrieve content.
+
+      p
+        a(href="http://enable-javascript.com" target="_blank")
+          | How to enable JavaScript.

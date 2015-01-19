@@ -1,3 +1,12 @@
+# Cordova.
 platforms/
 plugins/
 *.apk
+
+# Log files and temp files.
+/log/*.log
+/tmp
+.sass-cache/**/*
+/www/**/*
+node_modules/**/*
+vendor/assets/bower_components/**/*
