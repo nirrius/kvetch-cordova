@@ -2,10 +2,10 @@
 <widget id="com.nirrius.kvetch" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Kvetch</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+      Relational Chat.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="" href="http://kvetch.io">
+        Nirrius Development Team
     </author>
     <content src="index.html" />
     <access origin="*" />
