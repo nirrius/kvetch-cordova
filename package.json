@@ -46,6 +46,7 @@
     "watchify": "~1.0.2"
   },
   "dependencies": {
+    "bootstrap-styl": "^4.0.1",
     "cordova": "^4.2.0",
     "cordova-android": "^3.6.4",
     "firebase": "~2.1.1",
@@ -53,6 +54,7 @@
     "lodash": "~2.4.1",
     "moment": "~2.7.0",
     "react": "~0.12.2",
+    "react-router": "^0.11.6",
     "reactfire": "~0.4.0"
   },
   "private": true,

@@ -4,10 +4,10 @@ connect = require("gulp-connect")
 
 assets =
   port: 3000
-  root: ["platforms/browser/www"]
+  root: ["www"]
 
   # Invalid routes are caught by the client side router.
-  fallback: "platforms/browser/www/index.html"
+  fallback: "www/index.html"
 
   middleware: (connect) ->
     return [
