@@ -105,8 +105,12 @@ var Message = React.createClass({
     link_match = regular_ass_link_regex.exec(message.text)
     if (link_match)
         {
-        message.text = message.text.replace(link_match[0], "")
-        message_blobs.push(<a href={link_match[0]} target='_blank'> {link_match[0]} </a>);
+        url = link_match[0]
+        message.text = message.text.replace(url, "")
+        if (url.indexOf('http') != 0){
+            url = "http://" + url
+        }
+        message_blobs.push(<a href={url} target='_blank'> {url} </a>);
         }
 
     message_blobs.unshift(message.text)
