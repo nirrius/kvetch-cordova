@@ -4,6 +4,7 @@ var React = require("react");
 var ChatRoom = require("./components/chat-room");
 var ApplicationHandler = require("./components/application-handler");
 var ChatRoomHandler = require("./components/chat-room-handler");
+var InputField = require("./components/input-field");
 
 var Router = require("react-router");
 var Routes = Router.Routes;
