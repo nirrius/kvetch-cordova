@@ -26,7 +26,7 @@ var Message = React.createClass({
     });
   },
 
-  componentWillMount: function () {
+  componentWillMount: function () {    
     this.messageRef = new Firebase("https://kvetch.firebaseio.com/messages/" + this.props.id);
     this.bindAsObject(this.messageRef, "payload");
   },
