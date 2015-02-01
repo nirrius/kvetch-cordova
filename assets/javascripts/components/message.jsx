@@ -3,6 +3,7 @@ var ReactFireMixin = require("reactfire");
 var Firebase = require("firebase");
 var moment = require("moment");
 var _ = require("lodash");
+var Youtube = require("react-youtube");
 
 // TODO: host locally!!
 var DEFAULT_AVATAR_URL = "http://i.imgur.com/gN6cSlS.jpg";
@@ -98,7 +99,7 @@ var Message = React.createClass({
     if (youtube_match)
         {
         message.text = message.text.replace(youtube_match[0], "")
-         message_blobs.push( <p> Video not supported yet</p>);
+         message_blobs.push(<Youtube url={youtube_match[0]} />);
         }
 
     regular_ass_link_regex = /((https?:\/\/)?(www\.)?[^ ]+\.[^ ]{2,}(\/[^ ]*)?)($| )/ig;
