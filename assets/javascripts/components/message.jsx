@@ -85,10 +85,11 @@ var Message = React.createClass({
   render_message: function (message) {
     image_regex = /https?:\/\/.*\.(?:jpg|jpeg|gif|png|webp|svg)/ig;
     image_match = image_regex.exec(message.text);
-
+    message_blobs = [];
     if (image_match)
         {
-        return <img src={image_match[0]} className="img-responsive"> </img>;
+        message.text = message.text.replace(image_match[0], "")
+        message_blobs.push(<img src={image_match[0]} className="img-responsive"> </img>);
         }
 
     youtube_regex = /https?:\/\/www.youtube.com\/watch?[^ ]*( |$)/ig;
@@ -96,17 +97,20 @@ var Message = React.createClass({
 
     if (youtube_match)
         {
-         return <p> Video not supported yet</p>;
+        message.text = message.text.replace(youtube_match[0], "")
+         message_blobs.push( <p> Video not supported yet</p>);
         }
 
     regular_ass_link_regex = /((https?:\/\/)?(www\.)?[^ ]+\.[^ ]{2,}(\/[^ ]*)?)($| )/ig;
     link_match = regular_ass_link_regex.exec(message.text)
     if (link_match)
         {
-        return <a href={link_match[0]} target='_blank'> {link_match[0]} </a>;
+        message.text = message.text.replace(link_match[0], "")
+        message_blobs.push(<a href={link_match[0]} target='_blank'> {link_match[0]} </a>);
         }
 
-    return message.text;
+    message_blobs.unshift(message.text)
+    return message_blobs;
   },
 
 
