@@ -8,7 +8,18 @@ var
 var DEFAULT_AVATAR_URL = "http://i.imgur.com/gN6cSlS.jpg"
 
 var Message = React.createClass({
-  displayName: "Message",
+  componentDidMount: function () {
+    this.props.onMount()
+  },
+
+  getDefaultProps: function () {
+    return {
+      position: {
+        x: 0,
+        y: 0
+      }
+    };
+  },
 
   getAuthor: function () {
     return _.defaults((this.props.author || {}), {
@@ -17,13 +28,21 @@ var Message = React.createClass({
     })
   },
 
+  getContainerStyle: function () {
+    var position = this.props.position
+
+    return {
+      transform: "translate3d(" + position.x + ", " + position.y + ", 0)"
+    }
+  },
+
   render: function () {
     var author = this.getAuthor()
 
-    return <div className="message" data-message-id={this.props.id}>
-      {this.renderMessageReference()}
+    return <div className="message" data-message-id={this.props.id} style={this.getContainerStyle()}>
 
       <section className="message-body">
+        {this.renderMessageReference()}
         <div>
           {this.renderMessage()}
         </div>

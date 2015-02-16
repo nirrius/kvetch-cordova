@@ -6,7 +6,7 @@ var
   Router = require("react-router"),
   Message = require("./message"),
   InputField = require("./input-field"),
-  _ = require("lodash"),
+  map = require("lodash").map,
   chatStoreState = Marty.createStateMixin(chatStore),
   ROOT_ID = "-JeET71Lq_8X116CKmTs"
 
@@ -22,9 +22,18 @@ var ChatRoom = React.createClass({
   },
 
   renderMessages: function () {
-    return _.map(this.state, function (message) {
-      return <Message {...message} key={message.id} />
-    })
+    function renderMessage (message) {
+      return <Message {...message} key={message.id} onMount={this.handleMessageMount.bind(this, message)} />
+    }
+
+    return map(this.state, renderMessage.bind(this))
+  },
+
+  handleMessageMount: function (message) {
+    var parentID = message.parents[0]
+    if (typeof this.state[parentID] === "undefined") return
+
+    // TODO: REPOSITION NODES.
   },
 
   handleSubmit: function(e) {
