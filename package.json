@@ -36,11 +36,13 @@
     "gulp-util": "~2.2.0",
     "gulp-watch": "~1.0.3",
     "js-yaml": "~3.1.0",
+    "mocha": "^2.1.0",
     "nib": "~1.0.3",
     "pretty-hrtime": "~0.2.1",
     "reactify": "^0.17.1",
     "require-dir": "~0.1.0",
     "run-sequence": "~0.3.6",
+    "should": "^5.0.0",
     "vinyl-buffer": "0.0.0",
     "vinyl-source-stream": "~0.1.1",
     "watchify": "~1.0.2"
