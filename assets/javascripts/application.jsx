@@ -11,7 +11,7 @@ var Route = Router.Route;
 var NotFoundRoute = Router.NotFoundRoute;
 var DefaultRoute = Router.DefaultRoute;
 
-routes = <Route name="root" path="/" handler={ApplicationHandler}>
+var routes = <Route name="root" path="/" handler={ApplicationHandler}>
   <NotFoundRoute name="chat-room" handler={ChatRoom} />
 </Route>;
 

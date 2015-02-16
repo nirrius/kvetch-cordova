@@ -1,73 +1,47 @@
-var React = require("react");
-var ReactFireMixin = require("reactfire");
-var Firebase = require("firebase");
-var moment = require("moment");
-var _ = require("lodash");
-var Youtube = require("react-youtube");
+var
+  React = require("react"),
+  moment = require("moment"),
+  _ = require("lodash"),
+  Youtube = require("react-youtube")
 
 // TODO: host locally!!
-var DEFAULT_AVATAR_URL = "http://i.imgur.com/gN6cSlS.jpg";
+var DEFAULT_AVATAR_URL = "http://i.imgur.com/gN6cSlS.jpg"
 
 var Message = React.createClass({
   displayName: "Message",
 
-  mixins: [ReactFireMixin],
-
-  getInitialState: function () {
-    return {
-      payload: null
-    }
-  },
-
   getAuthor: function () {
-    return _.defaults((this.state.payload.author || {}), {
+    return _.defaults((this.props.author || {}), {
       name: "you know who",
       avatar: DEFAULT_AVATAR_URL
-    });
-  },
-
-  componentWillMount: function () {
-    this.messageRef = new Firebase("https://kvetch.firebaseio.com/messages/" + this.props.id);
-    this.bindAsObject(this.messageRef, "payload");
+    })
   },
 
   render: function () {
-    var payload = this.state.payload;
+    var author = this.getAuthor()
 
-    if (payload == null) {
-      return null;
-    }
+    return <div className="message" data-message-id={this.props.id}>
+      {this.renderMessageReference()}
 
-    var children = _.map(payload.children, function (id) {
-      return <Message id={id} key={id} />;
-    });
+      <section className="message-body">
+        <div>
+          {this.renderMessage()}
+        </div>
+      </section>
 
-    var author = this.getAuthor();
+      <footer className="message-details">
+        <figure className="message-avatar">
+          <img src={author.avatar} />
+        </figure>
 
-    return <div className="thread">
-      <div className="message">
-        {this.renderMessageReference()}
+        <span className="message-author-name">
+          {author.name}
+        </span>
 
-        <section className="message-body">
-          <div>{this.render_message(payload)}</div>
-        </section>
-
-        <footer className="message-details">
-          <figure className="message-avatar">
-            <img src={author.avatar} />
-          </figure>
-
-          <span className="message-author-name">
-            {author.name}
-          </span>
-
-          <span title={this.formatDateString(payload.createdAt)} className="deemphasized message-created-at">
-            {this.humanize(payload.createdAt)}
-          </span>
-        </footer>
-      </div>
-
-      {children}
+        <span title={this.formatDateString(this.props.createdAt)} className="deemphasized message-created-at">
+          {this.humanize(this.props.createdAt)}
+        </span>
+      </footer>
     </div>
   },
 
@@ -76,49 +50,50 @@ var Message = React.createClass({
   },
 
   formatDateString: function (datetime) {
-    return moment(datetime).toISOString();
+    return moment(datetime).toISOString()
   },
 
   humanize: function (datetime) {
-    return moment(datetime).fromNow();
+    return moment(datetime).fromNow()
   },
 
-  render_message: function (message) {
-    image_regex = /https?:\/\/.*\.(?:jpg|jpeg|gif|png|webp|svg)/ig;
-    image_match = image_regex.exec(message.text);
-    message_blobs = [];
-    if (image_match)
-        {
-        message.text = message.text.replace(image_match[0], "")
-        message_blobs.push(<img src={image_match[0]} className="img-responsive"> </img>);
-        }
+  renderMessage: function () {
+    var
+      image_regex = /https?:\/\/.*\.(?:jpg|jpeg|gif|png|webp|svg)/ig,
+      regular_ass_link_regex = /((https?:\/\/)?(www\.)?[^ ]+\.[^ ]{2,}(\/[^ ]*)?)($| )/ig,
+      youtube_regex = /https?:\/\/www.youtube.com\/watch?[^ ]*( |$)/ig,
+      text = this.props.text,
+      image_match = image_regex.exec(text),
+      link_match = regular_ass_link_regex.exec(text),
+      youtube_match = youtube_regex.exec(text),
+      message_blobs = []
 
-    youtube_regex = /https?:\/\/www.youtube.com\/watch?[^ ]*( |$)/ig;
-    youtube_match = youtube_regex.exec(message.text);
+    if (image_match) {
+      text = text.replace(image_match[0], "")
+      message_blobs.push(<img src={image_match[0]} className="img-responsive" />)
+    }
 
-    if (youtube_match)
-        {
-        message.text = message.text.replace(youtube_match[0], "")
-         message_blobs.push(<Youtube url={youtube_match[0]} />);
-        }
+    if (youtube_match) {
+      text = text.replace(youtube_match[0], "")
+      message_blobs.push(<Youtube url={youtube_match[0]} />)
+    }
 
-    regular_ass_link_regex = /((https?:\/\/)?(www\.)?[^ ]+\.[^ ]{2,}(\/[^ ]*)?)($| )/ig;
-    link_match = regular_ass_link_regex.exec(message.text)
-    if (link_match)
-        {
-        url = link_match[0]
-        message.text = message.text.replace(url, "")
-        if (url.indexOf('http') != 0){
-            url = "http://" + url
-        }
-        message_blobs.push(<a href={url} target='_blank'> {url} </a>);
-        }
+    if (link_match) {
+      var url = link_match[0]
+      text = text.replace(url, "")
 
-    message_blobs.unshift(message.text)
-    return message_blobs;
+      if (url.indexOf("http") != 0) {
+          url = "http://" + url
+      }
+
+      message_blobs.push(<a href={url} target='_blank'> {url} </a>)
+    }
+
+    message_blobs.unshift(text)
+    return message_blobs
   },
 
 
-});
+})
 
-module.exports = Message;
+module.exports = Message
