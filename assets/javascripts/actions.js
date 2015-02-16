@@ -14,7 +14,11 @@ module.exports = Marty.createActionCreators({
       _.defaults(messageRef, {
         children: [],
         id: id,
-        parents: []
+        parents: [],
+        position: {
+          x: "10px", // FIXME: Placeholder. Should be 0.
+          y: "10px"
+        }
       })
 
       this.dispatch(messageRef)
