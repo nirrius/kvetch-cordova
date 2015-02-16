@@ -9,18 +9,19 @@ module.exports = Marty.createActionCreators({
   fetchMessage: constants.FETCH_MESSAGE(function (id) {
     function onSuccess (snapshot) {
       var
-        self = this,
         messageRef = snapshot.val()
 
       _.defaults(messageRef, {
+        children: [],
         id: id,
-        children: []
+        parents: []
       })
 
-      self.dispatch(messageRef)
+      this.dispatch(messageRef)
+
       messageRef.children.forEach(function (id) {
-        self.fetchMessage(id)
-      })
+        this.fetchMessage(id)
+      }.bind(this))
     }
 
     firebaseRef.child(id).on("value", onSuccess.bind(this))
